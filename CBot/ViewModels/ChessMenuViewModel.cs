@@ -1,4 +1,5 @@
 ﻿using CBot.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -6,13 +7,49 @@ namespace CBot.ViewModels
 {
 	public partial class ChessMenuViewModel : INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		private ObservableChessPieceCollection board;
+		private static readonly List<ChessPiece> StartingPositions = new() {
+			new(ChessPieceType.Rook, ChessPieceColor.Black, 1, 1),
+			new(ChessPieceType.Knight, ChessPieceColor.Black, 1, 2),
+			new(ChessPieceType.Bishop, ChessPieceColor.Black, 1, 3),
+			new(ChessPieceType.Queen, ChessPieceColor.Black, 1, 4),
+			new(ChessPieceType.King, ChessPieceColor.Black, 1, 5),
+			new(ChessPieceType.Bishop, ChessPieceColor.Black, 1, 6),
+			new(ChessPieceType.Knight, ChessPieceColor.Black, 1, 7),
+			new(ChessPieceType.Rook, ChessPieceColor.Black, 1, 8),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 1),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 2),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 3),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 4),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 5),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 6),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 7),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 8),
+			new(ChessPieceType.Pawn, ChessPieceColor.Black, 2, 8),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 1),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 2),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 3),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 4),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 5),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 6),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 7),
+			new(ChessPieceType.Pawn, ChessPieceColor.White, 7, 8),
+			new(ChessPieceType.Rook, ChessPieceColor.White, 8, 1),
+			new(ChessPieceType.Knight, ChessPieceColor.White, 8, 2),
+			new(ChessPieceType.Bishop, ChessPieceColor.White, 8, 3),
+			new(ChessPieceType.Queen, ChessPieceColor.White, 8, 4),
+			new(ChessPieceType.King, ChessPieceColor.White, 8, 5),
+			new(ChessPieceType.Bishop, ChessPieceColor.White, 8, 6),
+			new(ChessPieceType.Knight, ChessPieceColor.White, 8, 7),
+			new(ChessPieceType.Rook, ChessPieceColor.White, 8, 8)
+		};
+
+		private ObservableChessPieceCollection? board;
 
 		public ObservableChessPieceCollection Board
 		{
-			get { return board; }
+			get => board;
 			set
 			{
 				board = value;
@@ -22,14 +59,14 @@ namespace CBot.ViewModels
 
 		public ChessMenuViewModel()
 		{
-			Board = new ObservableChessPieceCollection();
-			for (int i = 0; i < 8; i++)
-			{
-				for (int j = 0; j < 8; j++)
-				{
-					Board.Add(new ChessPiece(ChessPieceType.None, ChessPieceColor.None, i, j));
-				}
-			}
+			Board = new();
+		}
+
+		public void ResetPositions()
+		{
+			Board.Clear();
+			foreach (ChessPiece piece in StartingPositions)
+				Board.Add(piece);
 		}
 
 		private void OnPropertyChanged(string propertyName)

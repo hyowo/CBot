@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace CBot.Models
 {
@@ -27,6 +23,7 @@ namespace CBot.Models
 
 	public class ChessPiece : INotifyPropertyChanged
 	{
+		public Image Image { get; set; }
 		private ChessPieceType _type;
 		public ChessPieceType Type
 		{
@@ -55,6 +52,7 @@ namespace CBot.Models
 			get { return _row; }
 			set
 			{
+				PreviousRow = _row;
 				_row = value;
 				OnPropertyChanged(nameof(Row));
 			}
@@ -66,10 +64,15 @@ namespace CBot.Models
 			get { return _column; }
 			set
 			{
+				PreviousColumn = _column;
 				_column = value;
 				OnPropertyChanged(nameof(Column));
 			}
 		}
+
+		public int PreviousRow { get; set; }
+
+		public int PreviousColumn { get; set; }
 
 		public ChessPiece()
 		{

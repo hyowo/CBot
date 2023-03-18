@@ -70,14 +70,45 @@
             </Border>
 
             <!-- White Pieces -->
-            <Grid Grid.Row="2">
-
+            <Grid Grid.Row="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Canvas>
+                        <Image Source="/Resources/Images/wB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wB"/>
+                    </Canvas>
+                </Border>
+                <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/wK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/wN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/wP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/wQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/wR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
             </Grid>
         </Grid>
         
         <!-- Controls Grid -->
         <Grid Grid.Column="1" x:Name="BoardControls">
-            <Button Margin="0,90,301,357" Click="Button_Click">Flip Board</Button>
+            <Button Margin="0,90,301,327" Click="Button_Click">Flip Board</Button>
         </Grid>
     </Grid>
 </Window>
