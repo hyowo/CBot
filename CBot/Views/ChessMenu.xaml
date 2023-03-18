@@ -1,0 +1,83 @@
+﻿<Window x:Class="CBot.Views.ChessMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:CBot.ViewModels"
+        
+        mc:Ignorable="d"
+        Title="CBot" Height="500" Width="800"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <StaticResource ResourceKey="WindowBackgroundBrush"/>
+    </Window.Background>
+    <!-- window content here -->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Chess Board Grid -->
+        <Grid Grid.Column="0" x:Name="ChessBoardGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="50px"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition MaxHeight="50px"/>
+            </Grid.RowDefinitions>
+            <!-- Black Pieces -->
+            <Grid Grid.Row="0" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Image Source="/Resources/Images/bR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Border>
+            </Grid>
+
+            <!-- Board -->
+            <Border Grid.Row="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="3px" Margin="3px">
+                <UniformGrid Rows="8" Columns="8" x:Name="ChessBoard"/>
+            </Border>
+
+            <!-- White Pieces -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid>
+        
+        <!-- Controls Grid -->
+        <Grid Grid.Column="1" x:Name="BoardControls">
+            <Button Margin="0,90,301,357" Click="Button_Click">Flip Board</Button>
+        </Grid>
+    </Grid>
+</Window>
