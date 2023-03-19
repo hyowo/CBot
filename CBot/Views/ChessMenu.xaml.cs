@@ -1,7 +1,6 @@
 ﻿using CBot.Models;
 using CBot.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -32,7 +31,6 @@ namespace CBot.Views
 			{
 				foreach (ChessPiece chp in e.NewItems)
 				{
-					chp.PropertyChanged += Piece_PositionChanged;
 					BitmapImage pieceImage = new();
 					pieceImage.BeginInit();
 					pieceImage.UriSource = new Uri($"pack://application:,,,/CBot;component/Resources/Images/{((chp.Color == ChessPieceColor.Black) ? 'b':'w')}{GetChessPieceLetter(chp.Type)}.png");
@@ -56,7 +54,6 @@ namespace CBot.Views
 			{
 				foreach (ChessPiece chp in e.OldItems)
 				{
-					chp.PropertyChanged -= Piece_PositionChanged;
 					foreach (var element in ChessBoard.Children)
 					{
 						if (element is Border && (element as Border).Name == GetChessSquareFromCoords(chp.Row, chp.Column))
@@ -107,6 +104,7 @@ namespace CBot.Views
 				border.Name = GetChessSquareFromInt(i);
 				ChessBoard.Children.Add(border);
 			}
+			ChessMenuViewModel.ResetPositions();
 		}
 
 		public static string GetChessSquareFromInt(int squareIndex)
@@ -150,20 +148,6 @@ namespace CBot.Views
 			};
 		}
 
-
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			ChessMenuViewModel.ResetPositions();
-			//var children = ChessBoard.Children.Cast<Border>().ToList();
-			//children.Reverse();
-
-			//ChessBoard.Children.Clear();
-			//foreach (var child in children)
-			//{
-			//	ChessBoard.Children.Add(child);
-			//}
-		}
-
 		private Point originalPosition;
 
 		private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -193,8 +177,8 @@ namespace CBot.Views
 			image.Cursor = Cursors.Arrow;
 
 			// Reset the position of the image element to the original position
-			double left = Math.Max(0, Math.Min(Canvas.GetLeft(image), image.ActualWidth - image.ActualWidth));
-			double top = Math.Max(0, Math.Min(Canvas.GetTop(image), image.ActualHeight - image.ActualHeight));
+			double left = Math.Max(0, Math.Min(Canvas.GetLeft(image), 0));
+			double top = Math.Max(0, Math.Min(Canvas.GetTop(image), 0));
 			image.SetValue(Canvas.LeftProperty, left);
 			image.SetValue(Canvas.TopProperty, top);
 
@@ -202,11 +186,19 @@ namespace CBot.Views
 
 			image.Visibility = Visibility.Visible;
 
-			if (Mouse.DirectlyOver is UIElement element && element.GetType() == typeof(Border))
+			if (Mouse.DirectlyOver is Border whereToPlace)
 			{
-				var whereToPlace = element as Border;
 				var coords = GetCoordsFromChessSquare(whereToPlace.Name);
 				PlaceNewPiece(coords[0], coords[1], pieceToPlace);
+			}
+			else if (Mouse.DirectlyOver is Image element2)
+			{
+				var parent = VisualTreeHelper.GetParent(element2) as Border;
+				if (parent?.GetType() == typeof(Border))
+				{
+					var coords = GetCoordsFromChessSquare(parent.Name);
+					PlaceNewPiece(coords[0], coords[1], pieceToPlace);
+				}
 			}
 		}
 
@@ -228,7 +220,15 @@ namespace CBot.Views
 				'b' => ChessPieceColor.Black,
 				_ => throw new ArgumentException("Invalid piece color."),
 			};
-			ChessMenuViewModel.Board.Add(new ChessPiece(pieceType, pieceColor, row, col));
+			var foundPiece = ChessMenuViewModel.Board.Where(x => x.Row == row && x.Column == col);
+			if (foundPiece != null)
+				ChessMenuViewModel.Board.Add(new ChessPiece(pieceType, pieceColor, row, col));
+			else
+			{
+				var foundPiece2 = foundPiece as ChessPiece;
+				foundPiece2.Type = pieceType;
+				foundPiece2.Color = pieceColor;
+			}
 		}
 
 		private void Image_MouseMove(object sender, MouseEventArgs e)
@@ -248,6 +248,18 @@ namespace CBot.Views
 				// Update the position of the image element
 				image.SetValue(Canvas.LeftProperty, offset.X);
 				image.SetValue(Canvas.TopProperty, offset.Y);
+			}
+		}
+
+		private void Rotate(object sender, RoutedEventArgs e)
+		{
+			var children = ChessBoard.Children.Cast<Border>().ToList();
+			children.Reverse();
+
+			ChessBoard.Children.Clear();
+			foreach (var child in children)
+			{
+				ChessBoard.Children.Add(child);
 			}
 		}
 	}

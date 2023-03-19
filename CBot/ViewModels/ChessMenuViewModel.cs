@@ -1,4 +1,5 @@
 ﻿using CBot.Models;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -62,11 +63,23 @@ namespace CBot.ViewModels
 			Board = new();
 		}
 
+		[RelayCommand]
 		public void ResetPositions()
 		{
-			Board.Clear();
+			Board.RemoveAll();
 			foreach (ChessPiece piece in StartingPositions)
 				Board.Add(piece);
+		}
+
+		[RelayCommand]
+		public void OnlyKings()
+		{
+			Board.RemoveAll();
+			foreach (ChessPiece piece in StartingPositions)
+			{
+				if (piece.Type == ChessPieceType.King)
+					Board.Add(piece);
+			}
 		}
 
 		private void OnPropertyChanged(string propertyName)

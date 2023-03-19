@@ -5,4 +5,5 @@
         <GradientStop Offset="1.0" Color="#2a0845" />
     </LinearGradientBrush>
     <SolidColorBrush x:Key="ChessBoardBorderColor" Color="#2a0845"/>
+    <SolidColorBrush x:Key="ControlBackgroundColor" Color="#56388f"/>
 </ResourceDictionary>

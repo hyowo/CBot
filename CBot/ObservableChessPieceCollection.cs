@@ -1,11 +1,24 @@
 ﻿using CBot.Models;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 namespace CBot
 {
+	public static class CollectionExtensions
+	{
+		public static void RemoveAll(this IList list)
+		{
+			while (list.Count > 0)
+			{
+				list.RemoveAt(list.Count - 1);
+			}
+		}
+	}
+
 	public class ObservableChessPieceCollection : ObservableCollection<ChessPiece>
 	{
 		public ObservableChessPieceCollection() : base() { }

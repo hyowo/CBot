@@ -45,22 +45,58 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bK"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bQ"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bR"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bB"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bN"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/bR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/bP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="bP"/>
+                    </Canvas>
                 </Border>
             </Grid>
 
@@ -81,6 +117,33 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
+                        <Image Source="/Resources/Images/wK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wK"/>
+                    </Canvas>
+                </Border>
+                <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Canvas>
+                        <Image Source="/Resources/Images/wQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wQ"/>
+                    </Canvas>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Canvas>
+                        <Image Source="/Resources/Images/wR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wR"/>
+                    </Canvas>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
+                    <Canvas>
                         <Image Source="/Resources/Images/wB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
                            MouseLeftButtonDown="Image_MouseLeftButtonDown"
                            MouseLeftButtonUp="Image_MouseLeftButtonUp"
@@ -88,27 +151,100 @@
                            Name="wB"/>
                     </Canvas>
                 </Border>
-                <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/wK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                </Border>
-                <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/wN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                </Border>
-                <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/wP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                </Border>
                 <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/wQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/wN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wN"/>
+                    </Canvas>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
-                    <Image Source="/Resources/Images/wR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <Canvas>
+                        <Image Source="/Resources/Images/wP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
+                           MouseMove="Image_MouseMove"
+                           Name="wP"/>
+                    </Canvas>
                 </Border>
             </Grid>
         </Grid>
         
         <!-- Controls Grid -->
-        <Grid Grid.Column="1" x:Name="BoardControls">
-            <Button Margin="0,90,301,327" Click="Button_Click">Flip Board</Button>
+        <Grid Grid.Column="1" x:Name="BoardControls" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="5" Background="{StaticResource ControlBackgroundColor}">
+                <TextBlock Text="ⓘ Info" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="22" FontWeight="ExtraBlack"/>
+            </Border>
+            <Border Grid.Row="1" Margin="5" Background="{StaticResource ControlBackgroundColor}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent">
+                            PLAY
+                        </Button>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent">
+                            BACK
+                        </Button>
+                    </Border>
+                    <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent">
+                            MOVE
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Row="2" Margin="5" Background="{StaticResource ControlBackgroundColor}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent"/>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Row="3" Margin="5" Background="{StaticResource ControlBackgroundColor}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent" Command="{Binding ResetPositionsCommand}">
+                            RESET
+                        </Button>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent" Command="{Binding OnlyKingsCommand}">
+                            KINGS ONLY
+                        </Button>
+                    </Border>
+                    <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                        <Button Background="Transparent" Click="Rotate">
+                            ROTATE
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
