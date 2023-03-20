@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:CBot.ViewModels"
-        
+        xmlns:viewmodels="clr-namespace:CBot.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ChessMenuViewModel}"
         mc:Ignorable="d"
         Title="CBot" Height="500" Width="800"
         ResizeMode="NoResize">
@@ -47,54 +46,54 @@
                 <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bK"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bQ"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bR"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bB"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bN"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/bP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="bP"/>
                     </Canvas>
                 </Border>
@@ -118,54 +117,54 @@
                 <Border Grid.Column="0" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wK.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wK"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wQ.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wQ"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="2" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wR.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wR"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="3" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wB.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wB"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="4" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wN.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wN"/>
                     </Canvas>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="{StaticResource ChessBoardBorderColor}" BorderThickness="1" Margin="2px">
                     <Canvas>
                         <Image Source="/Resources/Images/wP.png" RenderOptions.BitmapScalingMode="NearestNeighbor"
-                           MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                           MouseLeftButtonUp="Image_MouseLeftButtonUp"
-                           MouseMove="Image_MouseMove"
+                           MouseLeftButtonDown="PieceDrag_MouseDown"
+                           MouseLeftButtonUp="PieceDrag_MouseUp"
+                           MouseMove="PieceDrag_MouseMove"
                            Name="wP"/>
                     </Canvas>
                 </Border>
@@ -191,7 +190,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1">
-                        <Button Background="Transparent">
+                        <Button Background="Transparent" Command="{Binding PlayCommand}">
                             PLAY
                         </Button>
                     </Border>
@@ -239,7 +238,7 @@
                         </Button>
                     </Border>
                     <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1">
-                        <Button Background="Transparent" Click="Rotate">
+                        <Button Background="Transparent" Click="Rotate_Click">
                             ROTATE
                         </Button>
                     </Border>

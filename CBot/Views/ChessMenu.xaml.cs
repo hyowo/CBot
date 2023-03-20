@@ -13,17 +13,19 @@ namespace CBot.Views
 {
 	public partial class ChessMenu : Window
 	{
-		private ChessMenuViewModel ChessMenuViewModel { get; set; }
+		private readonly ChessMenuViewModel chessMenuViewModel;
 		public ChessMenu()
 		{
 			InitializeComponent();
-			ChessMenuViewModel = new();
-			DataContext = ChessMenuViewModel;
+			chessMenuViewModel = new();
+			DataContext = chessMenuViewModel;
 
-			ChessMenuViewModel.Board.CollectionChanged += Board_CollectionChanged;
+			chessMenuViewModel.Board.CollectionChanged += Board_CollectionChanged;
 
 			InitializeChessBoard();
 		}
+
+		// shit i broke it :(
 
 		private void Board_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
@@ -31,6 +33,12 @@ namespace CBot.Views
 			{
 				foreach (ChessPiece chp in e.NewItems)
 				{
+					var alreadyExist = (sender as ObservableChessPieceCollection).Where(x => x.Column == chp.Column && x.Row == chp.Row);
+					if (alreadyExist.Any())
+					{
+						(sender as ObservableChessPieceCollection).Remove(alreadyExist.First());
+					}
+
 					BitmapImage pieceImage = new();
 					pieceImage.BeginInit();
 					pieceImage.UriSource = new Uri($"pack://application:,,,/CBot;component/Resources/Images/{((chp.Color == ChessPieceColor.Black) ? 'b':'w')}{GetChessPieceLetter(chp.Type)}.png");
@@ -40,11 +48,15 @@ namespace CBot.Views
 					{
 						Source = pieceImage
 					};
+					chp.Image.MouseLeftButtonUp += PieceDrag_MouseUp;
+					chp.Image.MouseLeftButtonDown += PieceDrag_MouseDown;
+					chp.Image.MouseMove += PieceDrag_MouseMove;
 					foreach (var element in ChessBoard.Children)
 					{
 						if (element is Border && (element as Border).Name == GetChessSquareFromCoords(chp.Row, chp.Column))
 						{
-							(element as Border).Child = chp.Image;
+							chp.PropertyChanged += Piece_PositionChanged;
+							((element as Border).Child as Canvas).Children.Add(chp.Image);
 							break;
 						}
 					}
@@ -58,7 +70,8 @@ namespace CBot.Views
 					{
 						if (element is Border && (element as Border).Name == GetChessSquareFromCoords(chp.Row, chp.Column))
 						{
-							(element as Border).Child = null;
+							chp.PropertyChanged -= Piece_PositionChanged;
+							((element as Border).Child as Canvas).Children.Clear();
 							break;
 						}
 					}
@@ -69,9 +82,9 @@ namespace CBot.Views
 		private void Piece_PositionChanged(object sender, PropertyChangedEventArgs e)
 		{
 			var _sender = sender as ChessPiece;
-			var maybeOver = ChessMenuViewModel.Board.Where(x => x.Column == _sender.Column && x.Row == _sender.Row && x != _sender).First();
+			var maybeOver = chessMenuViewModel.Board.Where(x => x.Column == _sender.Column && x.Row == _sender.Row && x != _sender).First();
 			if (maybeOver != null)
-				ChessMenuViewModel.Board.Remove(maybeOver);
+				chessMenuViewModel.Board.Remove(maybeOver);
 			foreach (var element in ChessBoard.Children)
 			{
 				if (element is Border && (element as Border).Name == GetChessSquareFromCoords(_sender.PreviousRow, _sender.PreviousColumn))
@@ -102,18 +115,19 @@ namespace CBot.Views
 				else
 					border.Background = new SolidColorBrush(Color.FromArgb(200, 38, 8, 61));
 				border.Name = GetChessSquareFromInt(i);
+				border.Child = new Canvas();
 				ChessBoard.Children.Add(border);
 			}
-			ChessMenuViewModel.ResetPositions();
+			//chessMenuViewModel.ResetPositions();
 		}
 
 		public static string GetChessSquareFromInt(int squareIndex)
 		{
-			int rank = squareIndex / 8;  // calculate the rank (row) number
-			int file = squareIndex % 8;  // calculate the file (column) number
-			char fileChar = (char)('A' + file);  // convert the file number to a character (A to H)
-			int rankNum = 8 - rank;  // convert the rank number to a number (1 to 8)
-			return $"{fileChar}{rankNum}";  // return the square in the format of H8 to A1
+			int rank = squareIndex / 8;
+			int file = squareIndex % 8;
+			char fileChar = (char)('A' + file);
+			int rankNum = 8 - rank;
+			return $"{fileChar}{rankNum}";
 		}
 
 		public static string GetChessSquareFromCoords(int row, int col)
@@ -123,16 +137,10 @@ namespace CBot.Views
 
 		public static int[] GetCoordsFromChessSquare(string chessSquare)
 		{
-			// Convert the file character to a column number
 			int col = chessSquare[0] - 'A' + 1;
-
-			// Convert the rank number to a row number
 			int row = 8 - (chessSquare[1] - '1');
-
-			// Return the row and column as an integer array
 			return new int[] { row, col };
 		}
-
 
 		public static char GetChessPieceLetter(ChessPieceType pieceType)
 		{
@@ -150,55 +158,93 @@ namespace CBot.Views
 
 		private Point originalPosition;
 
-		private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		private void PieceDrag_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			// Get the image element that was clicked
 			Image image = sender as Image;
-
-			// Store the original position of the image element
 			originalPosition = e.GetPosition(null);
-
-			// Set the cursor to the hand cursor to indicate dragging
 			image.Cursor = Cursors.Hand;
-
-			// Capture the mouse to the image element to track the dragging operation
 			image.CaptureMouse();
+			image.SetValue(Panel.ZIndexProperty, 5);
 		}
 
-		private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		private void PieceDrag_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			// Get the image element that was clicked
 			Image image = sender as Image;
 
 			image.Visibility = Visibility.Collapsed;
-
-			// Release the mouse capture and reset the cursor
 			image.ReleaseMouseCapture();
 			image.Cursor = Cursors.Arrow;
 
-			// Reset the position of the image element to the original position
 			double left = Math.Max(0, Math.Min(Canvas.GetLeft(image), 0));
 			double top = Math.Max(0, Math.Min(Canvas.GetTop(image), 0));
 			image.SetValue(Canvas.LeftProperty, left);
 			image.SetValue(Canvas.TopProperty, top);
 
-			var pieceToPlace = image.Name;
+			Console.WriteLine(VisualTreeHelper.GetParent((UIElement)Mouse.DirectlyOver).ToString());
 
-			image.Visibility = Visibility.Visible;
 
 			if (Mouse.DirectlyOver is Border whereToPlace)
 			{
 				var coords = GetCoordsFromChessSquare(whereToPlace.Name);
-				PlaceNewPiece(coords[0], coords[1], pieceToPlace);
+				PlaceNewPiece(coords[0], coords[1], image.Name);
 			}
 			else if (Mouse.DirectlyOver is Image element2)
 			{
-				var parent = VisualTreeHelper.GetParent(element2) as Border;
-				if (parent?.GetType() == typeof(Border))
+				if (VisualTreeHelper.GetParent(element2) is Canvas parent && VisualTreeHelper.GetParent(parent) is Border mainBorder)
 				{
-					var coords = GetCoordsFromChessSquare(parent.Name);
-					PlaceNewPiece(coords[0], coords[1], pieceToPlace);
+					if (mainBorder.Name.Length == 2 && mainBorder.Name[0] >= 'A' && mainBorder.Name[0] <= 'H' && mainBorder.Name[1] >= '1' && mainBorder.Name[1] <= '8')
+					{
+						if (VisualTreeHelper.GetParent(image) is Canvas dragparent && VisualTreeHelper.GetParent(dragparent) is Border dragMainBorder &&
+						dragMainBorder.Name.Length == 2 && dragMainBorder.Name[0] >= 'A' && dragMainBorder.Name[0] <= 'H' &&
+						dragMainBorder.Name[1] >= '1' && dragMainBorder.Name[1] <= '8')
+						{
+							var coords = GetCoordsFromChessSquare(dragMainBorder.Name);
+							var coords2 = GetCoordsFromChessSquare(mainBorder.Name);
+							Console.WriteLine($"Drag Main Border: {dragMainBorder.Name}\nmainBorder: {mainBorder.Name}");
+							Console.WriteLine(chessMenuViewModel.Board.Count);
+							//ChessMenuViewModel.Board.ReplacePiece(, coords2[0], coords2[1]);
+						}
+						else
+						{
+							var coords = GetCoordsFromChessSquare(mainBorder.Name);
+							PlaceNewPiece(coords[0], coords[1], image.Name);
+						}
+					}
 				}
+			}
+
+			image.Visibility = Visibility.Visible;
+		}
+
+		private void PieceDrag_MouseMove(object sender, MouseEventArgs e)
+		{
+			// Get the image element that is being dragged
+			Image image = sender as Image;
+
+			// Check if the image element is being dragged
+			if (image.IsMouseCaptured)
+			{
+				// Get the current position of the mouse
+				Point currentPosition = e.GetPosition(null);
+
+				// Calculate the offset from the original position
+				Vector offset = currentPosition - originalPosition;
+
+				// Update the position of the image element
+				image.SetValue(Canvas.LeftProperty, offset.X);
+				image.SetValue(Canvas.TopProperty, offset.Y);
+			}
+		}
+
+		private void Rotate_Click(object sender, RoutedEventArgs e)
+		{
+			var children = ChessBoard.Children.Cast<Border>().ToList();
+			children.Reverse();
+
+			ChessBoard.Children.Clear();
+			foreach (var child in children)
+			{
+				ChessBoard.Children.Add(child);
 			}
 		}
 
@@ -220,47 +266,16 @@ namespace CBot.Views
 				'b' => ChessPieceColor.Black,
 				_ => throw new ArgumentException("Invalid piece color."),
 			};
-			var foundPiece = ChessMenuViewModel.Board.Where(x => x.Row == row && x.Column == col);
+			var foundPiece = chessMenuViewModel.Board.Where(x => x.Row == row && x.Column == col);
 			if (foundPiece != null)
-				ChessMenuViewModel.Board.Add(new ChessPiece(pieceType, pieceColor, row, col));
+				chessMenuViewModel.Board.Add(new ChessPiece(pieceType, pieceColor, row, col));
 			else
 			{
 				var foundPiece2 = foundPiece as ChessPiece;
 				foundPiece2.Type = pieceType;
 				foundPiece2.Color = pieceColor;
 			}
-		}
-
-		private void Image_MouseMove(object sender, MouseEventArgs e)
-		{
-			// Get the image element that is being dragged
-			Image image = sender as Image;
-
-			// Check if the image element is being dragged
-			if (image.IsMouseCaptured)
-			{
-				// Get the current position of the mouse
-				Point currentPosition = e.GetPosition(null);
-
-				// Calculate the offset from the original position
-				Vector offset = currentPosition - originalPosition;
-
-				// Update the position of the image element
-				image.SetValue(Canvas.LeftProperty, offset.X);
-				image.SetValue(Canvas.TopProperty, offset.Y);
-			}
-		}
-
-		private void Rotate(object sender, RoutedEventArgs e)
-		{
-			var children = ChessBoard.Children.Cast<Border>().ToList();
-			children.Reverse();
-
-			ChessBoard.Children.Clear();
-			foreach (var child in children)
-			{
-				ChessBoard.Children.Add(child);
-			}
+			Console.WriteLine(chessMenuViewModel.Board.Count);
 		}
 	}
 }

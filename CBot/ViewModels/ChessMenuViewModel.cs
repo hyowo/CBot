@@ -1,5 +1,6 @@
 ﻿using CBot.Models;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -46,7 +47,9 @@ namespace CBot.ViewModels
 			new(ChessPieceType.Rook, ChessPieceColor.White, 8, 8)
 		};
 
+		// WHY IS THE COLLECTION SIZE ALWAYS 0
 		private ObservableChessPieceCollection? board;
+		private ChessPieceColor turn;
 
 		public ObservableChessPieceCollection Board
 		{
@@ -55,6 +58,16 @@ namespace CBot.ViewModels
 			{
 				board = value;
 				OnPropertyChanged(nameof(Board));
+			}
+		}
+
+		private ChessPieceColor Turn
+		{
+			get => turn;
+			set
+			{
+				turn = value;
+				OnPropertyChanged(nameof(Turn));
 			}
 		}
 
@@ -85,6 +98,13 @@ namespace CBot.ViewModels
 		private void OnPropertyChanged(string propertyName)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private bool IsPlaying { get; set; } = false;
+
+		public void Play()
+		{
+			IsPlaying ^= true;
 		}
 	}
 }

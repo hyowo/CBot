@@ -17,14 +17,24 @@ namespace CBot
 				list.RemoveAt(list.Count - 1);
 			}
 		}
+
+		//public static void ReplacePiece(this ObservableChessPieceCollection collection, ChessPiece pieceToReplace, int newRow, int newColumn)
+		//{
+		//	ChessPiece newPiece = new(pieceToReplace.Type, pieceToReplace.Color, newRow, newColumn);
+		//	collection.Remove(pieceToReplace);
+		//	collection.Add(newPiece);
+		//}
 	}
 
 	public class ObservableChessPieceCollection : ObservableCollection<ChessPiece>
 	{
 		public ObservableChessPieceCollection() : base() { }
 
-		public ObservableChessPieceCollection(IEnumerable<ChessPiece> collection) : base(collection) { }
 
+		/*
+		Can't read collection, weird bug
+		My brain hurts D:
+		 */
 		protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{
 			base.OnCollectionChanged(e);
